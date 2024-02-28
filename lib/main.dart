@@ -2,6 +2,7 @@
 import 'package:bookstoreapp/horizontalscroll.dart';
 import 'package:flutter/material.dart';
 import 'package:bookstoreapp/categories.dart';
+import 'package:bookstoreapp/bookdetail.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,14 +10,35 @@ void main() {
 
 
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+  
+   
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Widget label = Home();
+
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home: label
+      );
+  }
+}
+
+
+class Home extends StatelessWidget {
+  const Home({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -299,6 +321,6 @@ class MyApp extends StatelessWidget {
           selectedItemColor: const Color.fromARGB(255, 151, 56, 30),
           unselectedItemColor: Colors.black,
         
-        ),),);
+        ),);
   }
 }

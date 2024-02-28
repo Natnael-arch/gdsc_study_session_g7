@@ -1,5 +1,6 @@
+import 'package:bookstoreapp/main.dart';
 import 'package:flutter/material.dart';
-
+import 'package:bookstoreapp/bookdetail.dart';
 
 class HorizontalScroll extends StatefulWidget {
   const HorizontalScroll(
@@ -24,21 +25,35 @@ class _HorizontalScrollState extends State<HorizontalScroll> {
               width: 150,
               decoration: const BoxDecoration(),
               child: Column(children: [
-                Container(
-                  height: 220,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(
-                          image: AssetImage(
-                            widget.images[index],
+                InkWell(
+                  child: Container(
+                    height: 220,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(
+                            image: AssetImage(
+                              widget.images[index],
                             ),
-                          fit: BoxFit.cover),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey.withOpacity(0.6),
-                            blurRadius: 4.0,
-                            offset: const Offset(0, 10)),
-                      ]),
+                            fit: BoxFit.cover),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey.withOpacity(0.6),
+                              blurRadius: 4.0,
+                              offset: const Offset(0, 10)),
+                        ]),
+                  ),
+                  onTap: () {
+                    print(widget.images[index]);
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Details(
+                            text: widget.bookTitle[index],
+                            imageIndex: widget.images[index]),
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(
                   height: 14,
@@ -55,4 +70,3 @@ class _HorizontalScrollState extends State<HorizontalScroll> {
         });
   }
 }
-
