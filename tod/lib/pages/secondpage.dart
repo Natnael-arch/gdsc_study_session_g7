@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:tod/pages/thirdpage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Secondpage extends StatelessWidget {
   const Secondpage({super.key});
@@ -58,6 +59,7 @@ class _MyFormState extends State<MyForm> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
      
       body: Padding(
@@ -159,6 +161,9 @@ class _MyFormState extends State<MyForm> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _saveFormData();
+                  }
                  Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Thirdpage()),
@@ -171,6 +176,46 @@ class _MyFormState extends State<MyForm> {
           ),
         ),
       ),
+      
     );
+
+  }
+   void _saveFormData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String taskName = _taskNameController.text;
+    String date = _dateController.text;
+    String description = _descriptionController.text;
+    
+    // Save form data to SharedPreferences
+    await prefs.setString('task_name', taskName);
+    await prefs.setString('date', date);
+    await prefs.setString('description', description);
+
+    // Show confirmation dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Saved'),
+          content: Text('Task data saved successfully'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+
+    // Clear form fields after saving
+    _taskNameController.clear();
+    _dateController.clear();
+    _descriptionController.clear();
   }
 }
+
+
+
